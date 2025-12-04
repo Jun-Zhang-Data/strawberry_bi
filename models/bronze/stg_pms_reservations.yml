@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stg_pms_reservations
-    description: "Bronze staging for PMS reservations"
+    description: "Bronze staging table for PMS reservations (JSON ingested from RAW)."
 
     columns:
       - name: RESERVATION_ID
