@@ -19,7 +19,7 @@ WITH source AS (
         record:"Booking_end_date"::DATE          AS booking_end_date,
         record:"Status_code"::VARCHAR            AS status_code,
         record:"Room_rate"::NUMBER(18,2)         AS room_rate,
-        record:"Total_amount"::NUMBER(18,2)      AS total_amount,
+        record:"Total_amount_gross"::NUMBER(18,2) AS total_amount_gross,
         src_file_name,
         load_ts_utc
     FROM {{ source('raw', 'pms_raw') }}
@@ -73,7 +73,7 @@ SELECT
     booking_end_date,
     status_code,
     room_rate,
-    total_amount,
+    total_amount_gross,
     src_file_name,
     load_ts_utc
 FROM dedup
