@@ -52,7 +52,7 @@ dedup AS (
         booking_end_date,
         status_code,
         room_rate,
-        total_amount,
+        total_amount_gross,
         src_file_name,
         load_ts_utc,
         ROW_NUMBER() OVER (
