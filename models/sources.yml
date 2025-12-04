@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: raw
+    database: STRAWBERRY
+    schema: RAW
+    tables:
+      - name: pms_raw
+        identifier: PMS_RAW
+        loaded_at_field: load_ts_utc
+        freshness:
+          warn_after: {count: 26, period: hour}
+          error_after: {count: 30, period: hour}
+      - name: membership_raw
+        identifier: MEMBERSHIP_RAW
+        loaded_at_field: load_ts_utc
+        freshness:
+          warn_after: {count: 26, period: hour}
+          error_after: {count: 30, period: hour}
+      - name: survey_raw
+        identifier: SURVEY_RAW
+        loaded_at_field: load_ts_utc
+        freshness:
+          warn_after: {count: 26, period: hour}
+          error_after: {count: 30, period: hour}

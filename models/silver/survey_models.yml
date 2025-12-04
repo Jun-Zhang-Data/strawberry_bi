@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: survey_response
+    description: "Survey response header, currently a thin view over stg_survey_raw."
+    columns:
+      - name: response_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_survey_question
+    description: "Survey question catalog (distinct question texts)."
+    columns:
+      - name: question_text
+        tests:
+          - not_null
+          - unique
+
+  - name: survey_answer
+    description: "Survey answer rows (one row per question/answer per survey)."
+    columns:
+      - name: survey_answer_sk
+        tests:
+          - not_null
+          - unique
+

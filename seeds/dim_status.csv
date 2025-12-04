@@ -1,0 +1,6 @@
+status_code,status_desc,is_active
+BOOKED,Reservation booked,TRUE
+CHECKEDIN,Guest checked in,TRUE
+CHECKEDOUT,Guest checked out,TRUE
+CANCELLED,Reservation cancelled,TRUE
+NO_SHOW,Guest did not arrive,TRUE

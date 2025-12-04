@@ -1,0 +1,27 @@
+# dbt build artifacts
+target/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS/editor
+.DS_Store
+.thumb.db
+.vscode/
+.idea/
+
+# Virtual envs
+.env
+.venv/
+venv/
+
+# Local dbt configs & profiles (contain credentials)
+*.log
+*.tmp
+dbt_packages/
+profiles.yml
+
+# Airflow local stuff (if you ever mount it here)
+airflow_logs/

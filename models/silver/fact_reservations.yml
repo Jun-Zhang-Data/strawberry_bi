@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: fact_reservations
+    description: "Core reservation fact table built from PMS, enriched with DIM_MEMBER (SCD2) and DIM_HOTEL."
+    tests:
+      - row_count_equals:
+          compare_model: ref('stg_pms_reservations')
+
+    columns:
+      - name: reservation_id
+        tests:
+          - not_null
+          - unique
+
+      - name: member_sk
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_member')
+                field: member_sk
+
+      - name: hotel_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_hotel')
+                field: hotel_id
+
+      - name: status_code
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_status')
+                field: status_code
+
+      - name: nights
+        tests:
+          - accepted_range:
+              min_value: 0
+
+      - name: booking_end_date
+        tests:
+          - not_before:
+              earlier_column: booking_start_date
+              later_column: booking_end_date
+
+

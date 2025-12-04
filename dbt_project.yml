@@ -1,0 +1,34 @@
+name: 'strawberry_bi'
+version: '1.0.0'
+config-version: 2
+
+profile: 'strawberry_bi'
+
+model-paths: ['models']
+seed-paths: ['seeds']
+macro-paths: ['macros']
+snapshot-paths: ['snapshots']
+analysis-paths: ['analyses']
+
+models:
+  strawberry_bi:
+    bronze:
+      +schema: 'BRONZE'
+      +materialized: 'incremental'
+      +tags: ['bronze']
+
+    silver:
+      +schema: 'SILVER'
+      +materialized: 'view'
+      +tags: ['silver']
+
+    gold:
+      +schema: 'GOLD'
+      +materialized: 'view'
+      +tags: ['gold']
+
+seeds:
+  strawberry_bi:
+    +schema: 'SILVER'
+
+

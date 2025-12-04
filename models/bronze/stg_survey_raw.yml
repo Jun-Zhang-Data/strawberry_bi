@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_survey_raw
+    description: "Bronze staging for survey JSON feed (one row per survey response)."
+    columns:
+      - name: survey_id
+        tests:
+          - not_null
+          - unique
+      - name: submitted_on_utc
+        tests:
+          - not_null
