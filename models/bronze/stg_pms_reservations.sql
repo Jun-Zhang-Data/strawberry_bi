@@ -3,7 +3,7 @@
     materialized = 'incremental',
     unique_key = 'reservation_id',
     incremental_strategy = 'merge',
-    tags = ['bronze']
+    
 ) }}
 
 WITH source AS (
@@ -76,7 +76,7 @@ SELECT
     total_amount_gross,
     src_file_name,
     load_ts_utc
-FROM dedup
+FROm dedup
 WHERE rn = 1
 
 

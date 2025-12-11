@@ -16,3 +16,33 @@ models:
           - not_null
           - accepted_values:
               values: ['BRONZE','SILVER','GOLD','PLATINUM']
+
+    version: 2
+
+models:
+  - name: dim_member
+    description: "SCD2 member dimension from member_status_snapshot."
+
+    columns:
+      - name: member_sk
+        description: "Surrogate key for member SCD2 row"
+        tests:
+          - not_null
+          - unique
+
+      - name: member_id
+        description: "Business key for member"
+        tests:
+          - not_null
+
+      - name: effective_from
+      - name: effective_to
+      - name: is_current
+
+    tests:
+      # Ensure we don't accidentally create identical duplicate rows
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - member_id
+            - effective_from
+

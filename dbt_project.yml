@@ -11,24 +11,28 @@ snapshot-paths: ['snapshots']
 analysis-paths: ['analyses']
 
 models:
-  strawberry_bi:
-    bronze:
-      +schema: 'BRONZE'
-      +materialized: 'incremental'
-      +tags: ['bronze']
 
-    silver:
-      +schema: 'SILVER'
-      +materialized: 'view'
-      +tags: ['silver']
+  bronze:
+    +schema: BRONZE
+    +materialized: incremental
 
-    gold:
-      +schema: 'GOLD'
-      +materialized: 'view'
-      +tags: ['gold']
+  silver:
+    +schema: SILVER
+    +materialized: view
+
+  gold:
+    +schema: GOLD
+    +materialized: view
+
+
+snapshots:
+  +schema: SILVER
 
 seeds:
-  strawberry_bi:
-    +schema: 'SILVER'
+  +schema: SILVER
+
+
+
+
 
 

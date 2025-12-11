@@ -1,7 +1,7 @@
 {{ config(
     schema = 'SILVER',
     materialized = 'view',
-    tags = ['silver']
+    
 ) }}
 
 SELECT

@@ -1,0 +1,16 @@
+version: 2
+
+seeds:
+  - name: dim_hotel
+    description: "Seed: hotel dimension"
+
+    columns:
+      - name: hotel_id
+        description: "Business key for hotel"
+        tests:
+          - not_null
+          - unique
+
+      - name: hotel_name
+        tests:
+          - not_null

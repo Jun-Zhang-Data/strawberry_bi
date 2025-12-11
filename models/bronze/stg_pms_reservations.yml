@@ -8,8 +8,10 @@ models:
       - name: RESERVATION_ID
         tests:
           - not_null
+          - unique 
 
-      - name: TOTAL_AMOUNT
+      - name: TOTAL_AMOUNT_GROSS
+        description: "Total reservation amount including taxes/fees (gross)"
         tests:
           - column_is_numeric
 
@@ -26,7 +28,7 @@ models:
             - BOOKING_END_DATE
             - STATUS_CODE
             - ROOM_RATE
-            - TOTAL_AMOUNT
+            - TOTAL_AMOUNT_GROSS
             - SRC_FILE_NAME
             - LOAD_TS_UTC
 

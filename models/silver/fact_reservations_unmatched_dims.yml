@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: fact_reservations_unmatched_dims
+    description: "Silver debug view of reservations where at least one dimension lookup (member, hotel, or status) failed."
+
+    columns:
+      - name: reservation_id
+        description: "Business key for the reservation"
+        tests:
+          - not_null
+
+      - name: member_sk
+        description: "Surrogate key from dim_member (NULL here means member join failed)"
+      - name: hotel_name
+        description: "Hotel name from dim_hotel (NULL here means hotel join failed)"
+      - name: status_desc
+        description: "Status description from dim_status (NULL here means status join failed)"
+
+    tests:
+      - expected_columns:
+          expected_columns:
+            - RESERVATION_ID
+            - RESERVATION_NO
+            - MEMBER_ID
+            - MEMBER_SK
+            - HOTEL_ID
+            - HOTEL_NAME
+            - BRAND
+            - REGION
+            - RESERVATION_DATE
+            - BOOKING_START_DATE
+            - BOOKING_END_DATE
+            - STATUS_CODE
+            - STATUS_DESC
+            - MEMBER_STATUS
+            - STATUS_IS_ACTIVE
+            - TOTAL_AMOUNT
+            - ROOM_RATE
+            - NIGHTS
+            - UPDATED_TIME_UTC
+            - LOAD_TS_UTC
