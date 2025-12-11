@@ -1,7 +1,7 @@
 {{ config(
     schema = 'GOLD',
     materialized = 'view',
-    tags = ['gold']
+    
 ) }}
 
 WITH scored AS (

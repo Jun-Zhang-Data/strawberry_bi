@@ -1,7 +1,7 @@
 {{ config(
     schema = 'SILVER',
     materialized = 'table',
-    tags = ['silver']
+    
 ) }}
 
 WITH base AS (

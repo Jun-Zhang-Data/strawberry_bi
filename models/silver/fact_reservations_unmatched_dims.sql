@@ -47,17 +47,6 @@ with_status as (
     left join {{ ref('dim_status') }} ds
       on wh.status_code = ds.status_code
 
-),
-
-matched as (
-
-    -- keep only rows where ALL critical dimension lookups succeeded
-    select *
-    from with_status
-    where member_sk      is not null
-      and hotel_name     is not null
-      and status_desc    is not null
-
 )
 
 select
@@ -73,15 +62,16 @@ select
     booking_start_date,
     booking_end_date,
     status_code,
-    status_desc,        -- from dim_status seed
-    member_status,      -- from dim_member
-    status_is_active,   -- from dim_status (TRUE/FALSE)
+    status_desc,
+    member_status,
+    status_is_active,
     total_amount_gross as total_amount,
     room_rate,
     datediff('day', booking_start_date, booking_end_date) as nights,
     updated_time_utc,
     load_ts_utc
-from matched
-
-
+from with_status
+where member_sk      is null
+   or hotel_name     is null
+   or status_desc    is null
 

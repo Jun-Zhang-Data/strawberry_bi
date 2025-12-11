@@ -2,24 +2,104 @@ version: 2
 
 sources:
   - name: raw
-    database: STRAWBERRY
+    database: "{{ target.database }}"
     schema: RAW
+
     tables:
+      # 1) PMS RAW
       - name: pms_raw
         identifier: PMS_RAW
-        loaded_at_field: load_ts_utc
+        loaded_at_field: LOAD_TS_UTC
+        
         freshness:
           warn_after: {count: 26, period: hour}
           error_after: {count: 30, period: hour}
+
+        # Table-level schema check using your expected_columns macro
+        tests:
+          - expected_columns:
+              arguments:
+                expected_columns:
+                  - RECORD
+                  - SRC_FILE_NAME
+                  - LOAD_TS_UTC
+
+        columns:
+          - name: RECORD
+            description: "Raw PMS reservation JSON payload"
+
+          - name: SRC_FILE_NAME
+            description: "Name of the landed raw file"
+            tests:
+              - not_null
+
+          - name: LOAD_TS_UTC
+            description: "Ingestion timestamp in UTC"
+            tests:
+              - not_null
+
+      # 2) MEMBERSHIP RAW
       - name: membership_raw
         identifier: MEMBERSHIP_RAW
-        loaded_at_field: load_ts_utc
+        loaded_at_field: LOAD_TS_UTC
         freshness:
           warn_after: {count: 26, period: hour}
           error_after: {count: 30, period: hour}
+
+        tests:
+          - expected_columns:
+              arguments:
+                expected_columns:
+                  - ID              # <-- actual column name
+                  - FIRST_NAME
+                  - LAST_NAME
+                  - STATUS
+                  - IS_ACTIVE
+                  - SRC_FILE_NAME
+                  - LOAD_TS_UTC
+                  
+
+        columns:
+          - name: RECORD
+            description: "Raw membership JSON payload"
+
+          - name: SRC_FILE_NAME
+            description: "Name of the landed membership file"
+            tests:
+              - not_null
+
+          - name: LOAD_TS_UTC
+            description: "Ingestion timestamp in UTC"
+            tests:
+              - not_null
+
+      # 3) SURVEY RAW
       - name: survey_raw
         identifier: SURVEY_RAW
-        loaded_at_field: load_ts_utc
+        loaded_at_field: LOAD_TS_UTC
         freshness:
           warn_after: {count: 26, period: hour}
           error_after: {count: 30, period: hour}
+
+        tests:
+          - expected_columns:
+              arguments:
+                expected_columns:
+                  - RECORD
+                  - SRC_FILE_NAME
+                  - LOAD_TS_UTC
+
+        columns:
+          - name: RECORD
+            description: "Raw survey JSON payload"
+
+          - name: SRC_FILE_NAME
+            description: "Name of the landed survey file"
+            tests:
+              - not_null
+
+          - name: LOAD_TS_UTC
+            description: "Ingestion timestamp in UTC"
+            tests:
+              - not_null
+

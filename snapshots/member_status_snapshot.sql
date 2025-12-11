@@ -5,9 +5,9 @@
       target_schema = 'SILVER',
       unique_key = 'member_id',
       strategy = 'timestamp',
-      updated_at = 'snapshot_loaded_at'
-    )
-}}
+      updated_at = 'snapshot_loaded_at', 
+    
+)}}
 
 SELECT
   member_id,
@@ -19,3 +19,4 @@ SELECT
 FROM {{ ref('stg_membership') }}
 
 {% endsnapshot %}
+
