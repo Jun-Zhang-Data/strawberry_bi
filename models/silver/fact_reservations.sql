@@ -27,10 +27,7 @@ with_member as (
 with_hotel as (
 
     select
-        wm.*,
-        dh.hotel_name,
-        dh.brand,
-        dh.region
+        wm.*
     from with_member wm
     left join {{ ref('dim_hotel') }} dh
       on wm.hotel_id = dh.hotel_id
@@ -40,9 +37,7 @@ with_hotel as (
 with_status as (
 
     select
-        wh.*,
-        ds.status_desc,
-        ds.is_active as status_is_active
+        wh.*
     from with_hotel wh
     left join {{ ref('dim_status') }} ds
       on wh.status_code = ds.status_code
@@ -55,8 +50,8 @@ matched as (
     select *
     from with_status
     where member_sk      is not null
-      and hotel_name     is not null
-      and status_desc    is not null
+      and hotel_id     is not null
+      and status_code    is not null
 
 )
 
@@ -66,16 +61,10 @@ select
     member_id,
     member_sk,
     hotel_id,
-    hotel_name,
-    brand,
-    region,
     reservation_date,
     booking_start_date,
     booking_end_date,
     status_code,
-    status_desc,        -- from dim_status seed
-    member_status,      -- from dim_member
-    status_is_active,   -- from dim_status (TRUE/FALSE)
     total_amount_gross as total_amount,
     room_rate,
     datediff('day', booking_start_date, booking_end_date) as nights,

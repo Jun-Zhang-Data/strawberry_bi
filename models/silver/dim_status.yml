@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: dim_status
+    description: "Status lookup table split out from PMS reservations (distinct status_code values)."
+    columns:
+      - name: STATUS_CODE
+        description: "Reservation status code coming from PMS."
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ['BOOKED', 'CHECKEDIN', 'CHECKEDOUT', 'CANCELLED', 'NO_SHOW']
