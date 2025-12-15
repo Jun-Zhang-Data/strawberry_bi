@@ -27,10 +27,7 @@ with_member as (
 with_hotel as (
 
     select
-        wm.*,
-        dh.hotel_name,
-        dh.brand,
-        dh.region
+        wm.*
     from with_member wm
     left join {{ ref('dim_hotel') }} dh
       on wm.hotel_id = dh.hotel_id
@@ -40,9 +37,7 @@ with_hotel as (
 with_status as (
 
     select
-        wh.*,
-        ds.status_desc,
-        ds.is_active as status_is_active
+        wh.*
     from with_hotel wh
     left join {{ ref('dim_status') }} ds
       on wh.status_code = ds.status_code
@@ -55,16 +50,10 @@ select
     member_id,
     member_sk,
     hotel_id,
-    hotel_name,
-    brand,
-    region,
     reservation_date,
     booking_start_date,
     booking_end_date,
     status_code,
-    status_desc,
-    member_status,
-    status_is_active,
     total_amount_gross as total_amount,
     room_rate,
     datediff('day', booking_start_date, booking_end_date) as nights,
@@ -72,6 +61,6 @@ select
     load_ts_utc
 from with_status
 where member_sk      is null
-   or hotel_name     is null
-   or status_desc    is null
+   or hotel_id     is null
+   or status_code    is null
 

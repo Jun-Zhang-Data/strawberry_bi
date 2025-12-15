@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: dim_hotel
+    description: "Hotel lookup table split out from PMS reservations (distinct hotel_id values)."
+    columns:
+      - name: HOTEL_ID
+        description: "Unique identifier of the hotel."
+        tests:
+          - not_null
+          - unique
