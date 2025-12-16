@@ -4,7 +4,7 @@ models:
   - name: survey_response
     description: "Survey response header, currently a thin view over stg_survey_raw."
     columns:
-      - name: response_id
+      - name: survey_id
         tests:
           - not_null
           - unique

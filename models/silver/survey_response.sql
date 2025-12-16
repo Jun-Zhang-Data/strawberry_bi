@@ -5,8 +5,7 @@
 ) }}
 
 SELECT
-  survey_id        AS response_id,
-  survey_id        AS survey_id,
+  survey_id,
   member_id,
   reservation_no,
   hotel_id,
