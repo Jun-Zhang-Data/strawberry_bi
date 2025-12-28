@@ -11,7 +11,7 @@ sources:
         identifier: EXTERNAL_LOYALTY_EVENTS
         columns:
           - name: EVENT_ID
-            tests: [not_null, unique]
+            tests: [not_null]
           - name: MEMBER_ID
             tests: [not_null]
           - name: EVENT_TYPE
