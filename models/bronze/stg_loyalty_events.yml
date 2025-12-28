@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stg_loyalty_events
+    description: "Bronze staging table for external loyalty events (deduped by event_id, keeping latest load_ts_utc)."
+    columns:
+      - name: EVENT_ID
+        description: "Unique event identifier from external API."
+        tests:
+          - not_null
+          - unique
+
+      - name: MEMBER_ID
+        tests:
+          - not_null
+
+      - name: EVENT_TYPE
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['POINT_EARNED', 'POINT_REDEEMED']
+
+      - name: POINTS
+        tests:
+          - column_is_numeric
+
+      - name: CREATED_AT
+        tests:
+          - not_null
+
+      - name: LOAD_TS_UTC
+        tests:
+          - not_null
+
+    tests:
+      - expected_columns:
+          arguments:
+            expected_columns:
+              - EVENT_ID
+              - MEMBER_ID
+              - EVENT_TYPE
+              - POINTS
+              - CREATED_AT
+              - RAW_PAYLOAD
+              - LOAD_TS_UTC

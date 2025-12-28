@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: fact_member_loyalty_events
+    description: "Silver fact table for member loyalty events, enriched with dim_member SCD2 (member_sk, member_status)."
+    columns:
+      - name: EVENT_ID
+        tests:
+          - not_null
+          - unique
+
+      - name: MEMBER_ID
+        tests:
+          - not_null
+
+      - name: MEMBER_SK
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_member')
+                field: member_sk
+
+      - name: EVENT_TYPE
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['POINT_EARNED', 'POINT_REDEEMED']
+
+      - name: POINTS
+        tests:
+          - accepted_range:
+              arguments:
+                min_value: -100000
+                max_value: 100000
+
+      - name: CREATED_AT
+        tests:
+          - not_null
+
+      - name: LOAD_TS_UTC
+        tests:
+          - not_null
+
+    tests:
+      - expected_columns:
+          arguments:
+            expected_columns:
+              - EVENT_ID
+              - MEMBER_ID
+              - MEMBER_SK
+              - EVENT_TYPE
+              - POINTS
+              - CREATED_AT
+              - MEMBER_STATUS
+              - LOAD_TS_UTC
