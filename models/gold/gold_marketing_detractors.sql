@@ -22,7 +22,6 @@ platinum_members AS (
 joined AS (
     SELECT
       s.survey_answer_sk,
-      s.response_id,
       s.survey_id,
       s.member_id,
       s.question_text,
@@ -32,14 +31,13 @@ joined AS (
       sr.hotel_id
     FROM scored s
     JOIN {{ ref('survey_response') }} sr
-      ON s.response_id = sr.response_id
+      ON s.survey_id = sr.survey_id
     JOIN platinum_members p
       ON s.member_id = p.member_id
 )
 
 SELECT
   survey_answer_sk,
-  response_id,
   survey_id,
   member_id,
   question_text,

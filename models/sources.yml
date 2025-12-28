@@ -6,6 +6,25 @@ sources:
     schema: RAW
 
     tables:
+
+      - name: external_loyalty_events   # NEW
+        identifier: EXTERNAL_LOYALTY_EVENTS
+        columns:
+          - name: EVENT_ID
+            tests: [not_null]
+          - name: MEMBER_ID
+            tests: [not_null]
+          - name: EVENT_TYPE
+            tests:
+              - accepted_values:
+                  values: ['POINT_EARNED', 'POINT_REDEEMED']
+          - name: POINTS
+            tests: [column_is_numeric]
+          - name: LOAD_TS_UTC
+            tests: [not_null]
+
+
+
       # 1) PMS RAW
       - name: pms_raw
         identifier: PMS_RAW
