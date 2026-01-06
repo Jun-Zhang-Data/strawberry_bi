@@ -1,36 +1,60 @@
-{{ config(
+{{
+  config(
     schema = 'BRONZE',
     materialized = 'incremental',
     unique_key = 'event_id',
     incremental_strategy = 'merge'
-) }}
+  )
+}}
 
 with base as (
     select
-        EVENT_ID,
-        MEMBER_ID,
-        EVENT_TYPE,
-        try_to_number(POINTS)           as points,
-        CREATED_AT                  as created_at,
-        RAW_PAYLOAD,
-        LOAD_TS_UTC
-    from {{ source('raw', 'external_loyalty_events') }}
+        ingestion_id,
+        source,
+        file_name,
+        load_ts_utc,
+        payload,
+
+        payload:"event_id"::string    as event_id,
+        payload:"member_id"::string   as member_id,
+        payload:"event_type"::string  as event_type,
+        payload:"points"::string      as points_str,
+
+        payload:"created_at"::string  as created_at_str
+
+    from {{ source('raw', 'external_loyalty_events_raw') }}
+),
+
+typed as (
+    select
+        event_id,
+        member_id,
+        event_type,
+        try_to_number(points_str) as points,
+
+        /* Fix "+00:00Z" -> "+00:00" (remove trailing Z only when an offset exists) */
+        try_to_timestamp_tz(
+          iff(
+            regexp_like(created_at_str, '[-+][0-9]{2}:[0-9]{2}Z$'),
+            regexp_replace(created_at_str, 'Z$', ''),
+            created_at_str
+          )
+        ) as created_at,
+
+        payload as raw_payload,
+        load_ts_utc
+
+    from base
 ),
 
 deduped as (
     select
-        EVENT_ID      as event_id,
-        MEMBER_ID     as member_id,
-        EVENT_TYPE    as event_type,
-        points,
-        created_at,
-        RAW_PAYLOAD   as raw_payload,
-        LOAD_TS_UTC   as load_ts_utc,
+        *,
         row_number() over (
-            partition by EVENT_ID
-            order by LOAD_TS_UTC desc
+            partition by event_id
+            order by load_ts_utc desc
         ) as rn
-    from base
+    from typed
 )
 
 select
@@ -50,3 +74,7 @@ where rn = 1
       from {{ this }}
   )
 {% endif %}
+
+
+
+

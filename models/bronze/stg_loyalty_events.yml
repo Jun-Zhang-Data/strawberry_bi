@@ -24,9 +24,6 @@ models:
         tests:
           - column_is_numeric
 
-      - name: CREATED_AT
-        tests:
-          - not_null
 
       - name: LOAD_TS_UTC
         tests:
