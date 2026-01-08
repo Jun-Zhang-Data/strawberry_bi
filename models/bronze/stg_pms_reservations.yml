@@ -8,7 +8,9 @@ models:
       - name: RESERVATION_ID
         tests:
           - not_null
-          - unique 
+          - unique
+
+
 
       - name: TOTAL_AMOUNT_GROSS
         description: "Total reservation amount including taxes/fees (gross)"
