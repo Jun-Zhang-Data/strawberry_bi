@@ -2,7 +2,11 @@ version: 2
 
 models:
   - name: stg_pms_reservations
+<<<<<<< HEAD
     description: "Bronze staging table for PMS reservations (JSON ingested from RAW)."
+=======
+    description: "Bronze staging table for PMS reservations (ingested from raw JSON)."
+>>>>>>> feature/new_metric
 
     columns:
       - name: RESERVATION_ID
