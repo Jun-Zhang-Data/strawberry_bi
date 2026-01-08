@@ -6,21 +6,18 @@ sources:
     schema: RAW
 
     tables:
-
-      - name: external_loyalty_events   # NEW
-        identifier: EXTERNAL_LOYALTY_EVENTS
+      - name: external_loyalty_events_raw
+        identifier: EXTERNAL_LOYALTY_EVENTS_RAW
         columns:
-          - name: EVENT_ID
+          - name: INGESTION_ID
             tests: [not_null]
-          - name: MEMBER_ID
+          - name: SOURCE
             tests: [not_null]
-          - name: EVENT_TYPE
-            tests:
-              - accepted_values:
-                  values: ['POINT_EARNED', 'POINT_REDEEMED']
-          - name: POINTS
-            tests: [column_is_numeric]
+          - name: FILE_NAME
+            tests: [not_null]
           - name: LOAD_TS_UTC
+            tests: [not_null]
+          - name: PAYLOAD
             tests: [not_null]
 
 
