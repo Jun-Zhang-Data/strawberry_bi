@@ -10,4 +10,4 @@ models:
           - not_null
           - unique
           - accepted_values:
-              values: ['BOOKED', 'CHECKEDIN', 'CHECKEDOUT', 'CANCELLED', 'NO_SHOW']
+              values: ['BOOKED', 'CHECKEDIN', 'CHECKEDOUT', 'CANCELLED', 'NO_SHOW', 'CONFIRMED']

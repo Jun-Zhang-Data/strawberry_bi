@@ -4,10 +4,10 @@
     config(
       target_schema = 'SILVER',
       unique_key = 'member_id',
-      strategy = 'timestamp',
-      updated_at = 'snapshot_loaded_at', 
-    
-)}}
+      strategy = 'check',
+      check_cols = ['first_name','last_name','status','is_active']
+    )
+}}
 
 SELECT
   member_id,
@@ -19,4 +19,5 @@ SELECT
 FROM {{ ref('stg_membership') }}
 
 {% endsnapshot %}
+
 
