@@ -20,16 +20,14 @@ sources:
           - name: PAYLOAD
             tests: [not_null]
 
-
-
       # 1) PMS RAW
       - name: pms_raw
         identifier: PMS_RAW
         loaded_at_field: LOAD_TS_UTC
-        
-        freshness:
-          warn_after: {count: 26, period: hour}
-          error_after: {count: 30, period: hour}
+        config:
+          freshness:
+            warn_after: {count: 26, period: hour}
+            error_after: {count: 30, period: hour}
 
         # Table-level schema check using your expected_columns macro
         tests:
@@ -58,22 +56,22 @@ sources:
       - name: membership_raw
         identifier: MEMBERSHIP_RAW
         loaded_at_field: LOAD_TS_UTC
-        freshness:
-          warn_after: {count: 26, period: hour}
-          error_after: {count: 30, period: hour}
+        config:
+          freshness:
+            warn_after: {count: 26, period: hour}
+            error_after: {count: 30, period: hour}
 
         tests:
           - expected_columns:
               arguments:
                 expected_columns:
-                  - ID              # <-- actual column name
+                  - ID
                   - FIRST_NAME
                   - LAST_NAME
                   - STATUS
                   - IS_ACTIVE
                   - SRC_FILE_NAME
                   - LOAD_TS_UTC
-                  
 
         columns:
           - name: RECORD
@@ -93,9 +91,10 @@ sources:
       - name: survey_raw
         identifier: SURVEY_RAW
         loaded_at_field: LOAD_TS_UTC
-        freshness:
-          warn_after: {count: 26, period: hour}
-          error_after: {count: 30, period: hour}
+        config:
+          freshness:
+            warn_after: {count: 26, period: hour}
+            error_after: {count: 30, period: hour}
 
         tests:
           - expected_columns:
@@ -118,4 +117,5 @@ sources:
             description: "Ingestion timestamp in UTC"
             tests:
               - not_null
+
 
